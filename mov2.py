@@ -15,8 +15,8 @@ import threading
 import urllib.request
 
 
-bot = telebot.TeleBot("1435788509:AAFJvAm5X0NZq5d2VWMw95w3cFMNQWNMgtE")
-TOKEN = '1435788509:AAFJvAm5X0NZq5d2VWMw95w3cFMNQWNMgtE'
+bot = telebot.TeleBot("1435788509:AAF7Yflxr6VBWs-tAecxNPXkGfiIbZ4Y2JQ")
+TOKEN = '1435788509:AAF7Yflxr6VBWs-tAecxNPXkGfiIbZ4Y2JQ'
 
 eror = '🤷‍♂️*Результатов не найдено. Возможно фильма или сериала с таким названием нет или вы ввели название с ошибкой.*' \
        '\n' \
@@ -231,7 +231,7 @@ def getMessage():
 
 @server.route("/")
 def webhook():
-    TOKEN = '1435788509:AAFJvAm5X0NZq5d2VWMw95w3cFMNQWNMgtE'
+    TOKEN = '1435788509:AAF7Yflxr6VBWs-tAecxNPXkGfiIbZ4Y2JQ'
     bot.remove_webhook()
     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
     return "!", 200
