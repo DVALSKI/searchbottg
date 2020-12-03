@@ -157,7 +157,7 @@ def bad_poisk(message):
                                                                                          "\n" \
                                                                                          '[🔍ПОИСК ФИЛЬМОВ]' + '(http://t.me/kinolivesu_bot)' \
 
-                                        url2 = "http://t.me/kinolivesu_bot"
+                                        url2 = "https://t.me/kinolivesu_bot"
                                         url3 = "https://t.me/filmyuserialy"
                                         keyboard = types.InlineKeyboardMarkup()
                                         url_button = types.InlineKeyboardButton(text="Смотреть фильм", url=url1)
@@ -182,7 +182,7 @@ def bad_poisk(message):
                                                                                           "\n" \
                                                                                           '[🔍ПОИСК ФИЛЬМОВ]' + '(http://t.me/kinolivesu_bot)' \
 
-                                        url2 = "http://t.me/kinolivesu_bot"
+                                        url2 = "https://t.me/kinolivesu_bot"
                                         url3 = "https://t.me/filmyuserialy"
                                         keyboard = types.InlineKeyboardMarkup()
                                         url_button = types.InlineKeyboardButton(text="Смотреть сериал", url=url1)
