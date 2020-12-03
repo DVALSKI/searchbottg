@@ -66,8 +66,7 @@ def send_welcome(message):
         Userss = [(userN, userId, fname, lname)]
         mycursor.executemany(sqlform, Userss)
         mydb.commit()
-        mydb.close()
-        chri = "creator"
+        mydb.close()        
         chri = "member" 
         try:
             status = bot.get_chat_member(-1001348830793, user_id=message.from_user.id).status
@@ -94,7 +93,6 @@ def callback_inline(call):
     global podptext
     if call.message:
         if call.data == 'testp':
-            chri = "creator"
             chri = "member" 
             try:
                 status = bot.get_chat_member(-1001348830793, user_id=call.from_user.id).status
@@ -112,7 +110,6 @@ def callback_inline(call):
 def bad_poisk(message):
     global eror
     global podptext
-    chri = "creator"
     chri = "member"   
     try:
         try:
