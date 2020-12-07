@@ -60,7 +60,7 @@ def send_welcome(message):
     userN = str(message.from_user.username)
     userId = int(message.from_user.id)
     try:
-        mydb = mysql.connector.connect(host="nbfj50setb1vgbjh.cbetxkdyhwsb.us-east-1.rds.amazonaws.com", user='ej4hz3lszccvek32', passwd='i06m50w3ohokodzw', database='d6idyikh5aoehxm1')
+        mydb = mysql.connector.connect(host="searchbottgdb.cgz9qiqrxgau.eu-central-1.rds.amazonaws.com", user='searchbottgdb', passwd='searchbottgdb_password', database='searchbottgdb')
         mycursor = mydb.cursor()
         sqlform = 'Insert into Members2(usernames, userid, imya, famil) values(%s, %s, %s, %s)'
         Userss = [(userN, userId, fname, lname)]
