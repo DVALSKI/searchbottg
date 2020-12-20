@@ -5,7 +5,7 @@ from urllib.request import urlopen
 import json
 import urllib.parse
 from telegram import Update
-from telegram import ParseMode, message
+from telegram import ParseMode
 from telegram.ext import Updater
 from telegram.ext import MessageHandler
 import os
@@ -23,11 +23,12 @@ eror = '🤷‍♂️*Результатов не найдено. Возможн
        'Попробуйте еще раз! Отправьте мне название фильма или сериала как оно пишется в Кинопоиске. *Год фильма или сериала, какой сезон и какая серия при поиске писать не нужно!!*' \
        "\n" \
        "\n" \
+       "_Задать вопросы или пообщаться можно в нашем чате_" + '👉 [@Kino_Chat]' + "(https://t.me/kino_chat)"
 
 podptext = 'Привет друзья! Наш бот абсолютно бесплатен и без рекламы! Но доступ у него открыт только подписчикам нашего канала👉 ' + '[Фильмы и Сериалы Онлайн]' + '(https://t.me/filmyuserialy)' \
-                                                                                                                                                            "\n" \
-                                                                                                                                                            "\n" \
-                                                                                                                                                            'Подпишитесь, что бы не пропускать новинки! *После подписки нажмите кнопку "Я подписался". Доступ будет открыт автоматически.*'
+                                                                                                                                                                   "\n" \
+                                                                                                                                                                   "\n" \
+                                                                                                                                                                   'Подпишитесь, что бы не пропускать новинки! *После подписки нажмите кнопку "Я подписался". Доступ будет открыт автоматически.*'
 
 privet = "👋Добро пожаловать в поиск! Напиши мне название фильма, мультфильма или сериала и я найду их для тебя." \
          "\n" \
@@ -59,8 +60,8 @@ def send_welcome(message):
     userN = str(message.from_user.username)
     userId = int(message.from_user.id)
     try:
-        mydb = mysql.connector.connect(host="searchbottg.cgz9qiqrxgau.eu-central-1.rds.amazonaws.com", user='searchbottg_user', passwd='searchbottg_password', database='searchbottg')
-        # if mydb.is_connected():
+        mydb = mysql.connector.connect(host="searchbottg.cgz9qiqrxgau.eu-central-1.rds.amazonaws.com",
+                                       user='searchbottg_user', passwd='searchbottg_password', database='searchbottg')
         mycursor = mydb.cursor()
         sqlform = 'Insert into Members2(usernames, userid, imya, famil) values(%s, %s, %s, %s)'
         Userss = [(userN, userId, fname, lname)]
@@ -68,7 +69,7 @@ def send_welcome(message):
         mydb.commit()
         mydb.close()
         chri = "member"
-        if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=message.from_user.id).status or message.from_user.id == 207864941:
+        if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=message.from_user.id).status:
             bot.send_message(message.chat.id, privet, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         else:
             urlpod = "https://t.me/filmyuserialy"
@@ -90,28 +91,12 @@ def callback_inline(call):
     if call.message:
         if call.data == 'testp':
             chri = "member"
-            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or call.message.from_user.id == 207864941:
+            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status:
                 bot.send_message(call.message.chat.id, privet, parse_mode=ParseMode.MARKDOWN,
                                  disable_web_page_preview=True)
             else:
                 bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
                                           text="Вы не подписаны на канал!🤷‍♂️ Подпишитесь!")
-            tr1 = threading.Thread(target=send_welcome).start()
-
-
-# @bot.message_handler(commands=['sender'])
-# def send_news(message):
-#     global mydb
-#     soob = "Привет, мои друзья!"
-#     mycursor = mydb.cursor()
-#     mycursor.execute('Select userIds from Users')
-#     myresult =  mycursor.fetchall()
-#     for row in myresult:
-#         row = int(row[0])
-#         bot.send_chat_action(row, 'typing')
-#
-#         bot.send_message(row, soob)
-#         time.sleep(20)
 
 
 @bot.message_handler(content_types=['text'])
@@ -134,7 +119,6 @@ def bad_poisk(message):
                     fname = str(message.from_user.first_name)
                     lname = str(message.from_user.last_name)
 
-
                     z = 'http://playeronline.pro/api/videos.json?title=' + urllib.parse.quote(
                         message.text) + '&token=0b4c43c4ffed666cefe78e9bc99447ed'
                     try:
@@ -152,7 +136,8 @@ def bad_poisk(message):
                             else:
                                 for i in data:
                                     if i['type'] == 'movie' and i['kinopoisk_id'] != 1049459:
-                                        url1 = 'http://playeronline.pro/movie/' + i['token'] + '/iframe?d=hd.kinolive.su'
+                                        url1 = 'http://playeronline.pro/movie/' + i[
+                                            'token'] + '/iframe?d=hd.kinolive.su'
                                         otvet = '[' + '🎥' + ']' + '(' + i['poster'] + ')' + '*' + i[
                                             'title_ru'] + " " + '(' + str(i['year']) + '/' + i[
                                                     'quality'] + ')' + '*' + '\n' \
@@ -160,8 +145,7 @@ def bad_poisk(message):
                                                 + '[👁‍🗨СМОТРЕТЬ ФИЛЬМ]' + '(' + url1 + ')' \
                                                                                          "\n" \
                                                                                          "\n" \
-                                                                                         '[🔍ПОИСК ФИЛЬМОВ]' + '(https://t.me/kinolivesu_bot)' \
-
+                                                                                         '[🔍ПОИСК ФИЛЬМОВ]' + '(https://t.me/kinolivesu_bot)'
                                         url2 = "https://t.me/kinolivesu_bot"
                                         url3 = "https://t.me/filmyuserialy"
                                         keyboard = types.InlineKeyboardMarkup()
@@ -177,7 +161,8 @@ def bad_poisk(message):
 
 
                                     elif i['type'] == 'serial':
-                                        url1 = 'http://playeronline.pro/serial/' + i['token'] + '/iframe?d=hd.kinolive.su'
+                                        url1 = 'http://playeronline.pro/serial/' + i[
+                                            'token'] + '/iframe?d=hd.kinolive.su'
                                         otvet = '[' + '🎥' + ']' + '(' + i['poster'] + ')' + '*' + i[
                                             'title_ru'] + " " + '(' + str(i['year']) + '/' + i[
                                                     'quality'] + ')' + '*' + '\n' \
@@ -185,8 +170,7 @@ def bad_poisk(message):
                                                 + '[👁‍🗨СМОТРЕТЬ СЕРИАЛ]' + '(' + url1 + ')' \
                                                                                           "\n" \
                                                                                           "\n" \
-                                                                                          '[🔍ПОИСК ФИЛЬМОВ]' + '(https://t.me/kinolivesu_bot)' \
-
+                                                                                          '[🔍ПОИСК ФИЛЬМОВ]' + '(https://t.me/kinolivesu_bot)'
                                         url2 = "https://t.me/kinolivesu_bot"
                                         url3 = "https://t.me/filmyuserialy"
                                         keyboard = types.InlineKeyboardMarkup()
@@ -223,23 +207,23 @@ tr1 = threading.Thread(target=send_welcome).start()
 tr2 = threading.Thread(target=callback_inline).start()
 tr3 = threading.Thread(target=bad_poisk).start()
 
-bot.polling(none_stop=True)
+# bot.polling(none_stop=True)
 
-# server = Flask(__name__)
-#
-#
-# @server.route('/' + TOKEN, methods=['POST'])
-# def getMessage():
-#     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-#     return "!", 200
-#
-#
-# @server.route("/")
-# def webhook():
-#     TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
-#     bot.remove_webhook()
-#     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
-#     return "!", 200
+server = Flask(__name__)
+
+
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
+
+
+@server.route("/")
+def webhook():
+    TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
+    bot.remove_webhook()
+    bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
+    return "!", 200
 
 
 if __name__ == "__main__":
