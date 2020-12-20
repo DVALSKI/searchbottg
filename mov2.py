@@ -225,21 +225,21 @@ tr3 = threading.Thread(target=bad_poisk).start()
 
 bot.polling(none_stop=True)
 
- server = Flask(__name__)
+server = Flask(__name__)
 
 
- @server.route('/' + TOKEN, methods=['POST'])
- def getMessage():
-     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-     return "!", 200
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
 
 
- @server.route("/")
- def webhook():
-     TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
-     bot.remove_webhook()
-     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
-     return "!", 200
+@server.route("/")
+def webhook():
+    TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
+    bot.remove_webhook()
+    bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
+    return "!", 200
 
 
 if __name__ == "__main__":
