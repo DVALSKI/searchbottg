@@ -14,8 +14,8 @@ import mysql.connector
 import threading
 import urllib.request
 
-bot = telebot.TeleBot("1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM")
-TOKEN = '1435788509:AAHKp2sl58PM1-tI0OjKGrI0Lpcxgn447BY'
+bot = telebot.TeleBot("1435788509:AAFnSCDDcOOY_0StSHY1VWZA2nu9POe3VrQ")
+TOKEN = '1435788509:AAFnSCDDcOOY_0StSHY1VWZA2nu9POe3VrQ'
 
 eror = '🤷‍♂️*Результатов не найдено. Возможно фильма или сериала с таким названием нет или вы ввели название с ошибкой.*' \
        '\n' \
@@ -236,7 +236,7 @@ def getMessage():
 
 @server.route("/")
 def webhook():
-    TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
+    TOKEN = '1435788509:AAFnSCDDcOOY_0StSHY1VWZA2nu9POe3VrQ'
     bot.remove_webhook()
     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
     return "!", 200
