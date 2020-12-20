@@ -5,7 +5,7 @@ from urllib.request import urlopen
 import json
 import urllib.parse
 from telegram import Update
-from telegram import ParseMode
+from telegram import ParseMode, message
 from telegram.ext import Updater
 from telegram.ext import MessageHandler
 import os
@@ -14,9 +14,8 @@ import mysql.connector
 import threading
 import urllib.request
 
-
-bot = telebot.TeleBot("1435788509:AAEKMyEMlWm0tSU0vvF-teDbaCbuF0PI2bw")
-TOKEN = '1435788509:AAEKMyEMlWm0tSU0vvF-teDbaCbuF0PI2bw'
+bot = telebot.TeleBot("1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg")
+TOKEN = '1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg'
 
 eror = '🤷‍♂️*Результатов не найдено. Возможно фильма или сериала с таким названием нет или вы ввели название с ошибкой.*' \
        '\n' \
@@ -61,18 +60,15 @@ def send_welcome(message):
     userId = int(message.from_user.id)
     try:
         mydb = mysql.connector.connect(host="searchbottg.cgz9qiqrxgau.eu-central-1.rds.amazonaws.com", user='searchbottg_user', passwd='searchbottg_password', database='searchbottg')
+        # if mydb.is_connected():
         mycursor = mydb.cursor()
         sqlform = 'Insert into Members2(usernames, userid, imya, famil) values(%s, %s, %s, %s)'
         Userss = [(userN, userId, fname, lname)]
         mycursor.executemany(sqlform, Userss)
         mydb.commit()
-        mydb.close()        
-        chri = "member" 
-        try:
-            status = bot.get_chat_member(-1001348830793, user_id=message.from_user.id).status
-        except telebot.apihelper.ApiException:
-            status = False
-        if chri == status:
+        mydb.close()
+        chri = "member"
+        if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=message.from_user.id).status or message.from_user.id == 207864941:
             bot.send_message(message.chat.id, privet, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         else:
             urlpod = "https://t.me/filmyuserialy"
@@ -93,31 +89,39 @@ def callback_inline(call):
     global podptext
     if call.message:
         if call.data == 'testp':
-            chri = "member" 
-            try:
-                status = bot.get_chat_member(-1001348830793, user_id=call.from_user.id).status
-            except telebot.apihelper.ApiException:
-                status = False
-            if chri == status:
+            chri = "member"
+            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or call.message.from_user.id == 207864941:
                 bot.send_message(call.message.chat.id, privet, parse_mode=ParseMode.MARKDOWN,
                                  disable_web_page_preview=True)
             else:
                 bot.answer_callback_query(callback_query_id=call.id, show_alert=True,
                                           text="Вы не подписаны на канал!🤷‍♂️ Подпишитесь!")
+            tr1 = threading.Thread(target=send_welcome).start()
+
+
+# @bot.message_handler(commands=['sender'])
+# def send_news(message):
+#     global mydb
+#     soob = "Привет, мои друзья!"
+#     mycursor = mydb.cursor()
+#     mycursor.execute('Select userIds from Users')
+#     myresult =  mycursor.fetchall()
+#     for row in myresult:
+#         row = int(row[0])
+#         bot.send_chat_action(row, 'typing')
+# 
+#         bot.send_message(row, soob)
+#         time.sleep(20)
 
 
 @bot.message_handler(content_types=['text'])
 def bad_poisk(message):
     global eror
     global podptext
-    chri = "member"   
-    try:
-        try:
-            status = bot.get_chat_member(-1001348830793,
-                                         user_id=message.from_user.id).status
-        except telebot.apihelper.ApiException:
-            status = False
-        if chri == status:
+    chri = "member"
+    if message.text != "после" and message.text != "После" and message.text != "ПОСЛЕ":
+        if chri == bot.get_chat_member(chat_id="@filmyuserialy",
+                                       user_id=message.from_user.id).status or message.from_user.id == 207864941:
             if len(message.text) > 3:
                 try:
                     x = int(message.text) + 1
@@ -129,6 +133,7 @@ def bad_poisk(message):
 
                     fname = str(message.from_user.first_name)
                     lname = str(message.from_user.last_name)
+
 
                     z = 'http://playeronline.pro/api/videos.json?title=' + urllib.parse.quote(
                         message.text) + '&token=0b4c43c4ffed666cefe78e9bc99447ed'
@@ -146,7 +151,7 @@ def bad_poisk(message):
                                                  disable_web_page_preview=True)
                             else:
                                 for i in data:
-                                    if i['type'] == 'movie':
+                                    if i['type'] == 'movie' and i['kinopoisk_id'] != 1049459:
                                         url1 = 'http://playeronline.pro/movie/' + i['token'] + '/iframe?d=hd.kinolive.su'
                                         otvet = '[' + '🎥' + ']' + '(' + i['poster'] + ')' + '*' + i[
                                             'title_ru'] + " " + '(' + str(i['year']) + '/' + i[
@@ -155,7 +160,7 @@ def bad_poisk(message):
                                                 + '[👁‍🗨СМОТРЕТЬ ФИЛЬМ]' + '(' + url1 + ')' \
                                                                                          "\n" \
                                                                                          "\n" \
-                                                                                         '[🔍ПОИСК ФИЛЬМОВ]' + '(http://t.me/kinolivesu_bot)' \
+                                                                                         '[🔍ПОИСК ФИЛЬМОВ]' + '(https://t.me/kinolivesu_bot)' \
 
                                         url2 = "https://t.me/kinolivesu_bot"
                                         url3 = "https://t.me/filmyuserialy"
@@ -180,7 +185,7 @@ def bad_poisk(message):
                                                 + '[👁‍🗨СМОТРЕТЬ СЕРИАЛ]' + '(' + url1 + ')' \
                                                                                           "\n" \
                                                                                           "\n" \
-                                                                                          '[🔍ПОИСК ФИЛЬМОВ]' + '(http://t.me/kinolivesu_bot)' \
+                                                                                          '[🔍ПОИСК ФИЛЬМОВ]' + '(https://t.me/kinolivesu_bot)' \
 
                                         url2 = "https://t.me/kinolivesu_bot"
                                         url3 = "https://t.me/filmyuserialy"
@@ -210,7 +215,7 @@ def bad_poisk(message):
             keyboard.add(url_button2)
             bot.send_message(message.chat.id, podptext, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True,
                              reply_markup=keyboard)
-    except Exception:
+    else:
         bot.send_message(message.chat.id, eror, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
 
@@ -218,7 +223,7 @@ tr1 = threading.Thread(target=send_welcome).start()
 tr2 = threading.Thread(target=callback_inline).start()
 tr3 = threading.Thread(target=bad_poisk).start()
 
-# bot.polling(none_stop=True)
+bot.polling(none_stop=True)
 
 server = Flask(__name__)
 
@@ -231,7 +236,7 @@ def getMessage():
 
 @server.route("/")
 def webhook():
-    TOKEN = '1435788509:AAEKMyEMlWm0tSU0vvF-teDbaCbuF0PI2bw'
+    TOKEN = '1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg'
     bot.remove_webhook()
     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
     return "!", 200
