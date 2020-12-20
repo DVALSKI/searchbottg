@@ -207,7 +207,7 @@ tr1 = threading.Thread(target=send_welcome).start()
 tr2 = threading.Thread(target=callback_inline).start()
 tr3 = threading.Thread(target=bad_poisk).start()
 
-#bot.polling(none_stop=True)
+bot.polling(none_stop=True)
 
 server = Flask(name)
 
