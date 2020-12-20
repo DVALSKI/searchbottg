@@ -90,7 +90,7 @@ def callback_inline(call):
     if call.message:
         if call.data == 'testp':
             chri = "member"
-            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or message.from_user.id == 207864941:
+            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or call.message.from_user.id == 207864941:
                 bot.send_message(call.message.chat.id, privet, parse_mode=ParseMode.MARKDOWN,
                                  disable_web_page_preview=True)
             else:
