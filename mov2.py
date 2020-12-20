@@ -5,7 +5,7 @@ from urllib.request import urlopen
 import json
 import urllib.parse
 from telegram import Update
-from telegram import ParseMode
+from telegram import ParseMode, message
 from telegram.ext import Updater
 from telegram.ext import MessageHandler
 import os
@@ -90,7 +90,7 @@ def callback_inline(call):
     if call.message:
         if call.data == 'testp':
             chri = "member"
-            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or message.from_user.id == 207864941:
+            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or call.message.from_user.id == 207864941:
                 bot.send_message(call.message.chat.id, privet, parse_mode=ParseMode.MARKDOWN,
                                  disable_web_page_preview=True)
             else:
@@ -225,21 +225,21 @@ tr3 = threading.Thread(target=bad_poisk).start()
 
 bot.polling(none_stop=True)
 
-server = Flask(__name__)
-
-
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    return "!", 200
-
-
-@server.route("/")
-def webhook():
-    TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
-    bot.remove_webhook()
-    bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
-    return "!", 200
+# server = Flask(__name__)
+#
+#
+# @server.route('/' + TOKEN, methods=['POST'])
+# def getMessage():
+#     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+#     return "!", 200
+#
+#
+# @server.route("/")
+# def webhook():
+#     TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
+#     bot.remove_webhook()
+#     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
+#     return "!", 200
 
 
 if __name__ == "__main__":
