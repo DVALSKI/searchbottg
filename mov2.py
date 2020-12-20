@@ -220,7 +220,7 @@ def getMessage():
 
 @server.route("/")
 def webhook():
-    TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
+    TOKEN = '1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg'
     bot.remove_webhook()
     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
     return "!", 200
