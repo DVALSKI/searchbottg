@@ -23,7 +23,7 @@ eror = '🤷‍♂️*Результатов не найдено. Возможн
        'Попробуйте еще раз! Отправьте мне название фильма или сериала как оно пишется в Кинопоиске. *Год фильма или сериала, какой сезон и какая серия при поиске писать не нужно!!*' \
        "\n" \
        "\n" \
-       "_Задать вопросы или пообщаться можно в нашем чате_" + '👉 [@Kino_Chat]' + "(https://t.me/kino_chat)"
+       "_Задать вопросы или пообщаться можно в нашем чате_" + '👉 [@FilmyuSerialyChat]' + "(https://t.me/filmyuserialychat)"
 
 podptext = 'Привет друзья! Наш бот абсолютно бесплатен и без рекламы! Но доступ у него открыт только подписчикам нашего канала👉 ' + '[Фильмы и Сериалы Онлайн]' + '(https://t.me/filmyuserialy)' \
                                                                                                                                                                    "\n" \
@@ -207,23 +207,23 @@ tr1 = threading.Thread(target=send_welcome).start()
 tr2 = threading.Thread(target=callback_inline).start()
 tr3 = threading.Thread(target=bad_poisk).start()
 
-bot.polling(none_stop=True)
+#bot.polling(none_stop=True)
 
-# server = Flask(__name__)
-#
-#
-# @server.route('/' + TOKEN, methods=['POST'])
-# def getMessage():
-#     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-#     return "!", 200
-#
-#
-# @server.route("/")
-# def webhook():
-#     TOKEN = '1435788509:AAGJKj7VaOnbwEbEOEsps1qv9Dq0n5vKV6Y'
-#     bot.remove_webhook()
-#     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
-#     return "!", 200
+server = Flask(name)
+
+
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
+
+
+@server.route("/")
+def webhook():
+    TOKEN = '1435788509:AAGJKj7VaOnbwEbEOEsps1qv9Dq0n5vKV6Y'
+    bot.remove_webhook()
+    bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
+    return "!", 200
 
 
 if __name__ == "__main__":
