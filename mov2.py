@@ -4,7 +4,7 @@ import telebot
 from urllib.request import urlopen
 import json
 import urllib.parse
-from telegram import Update
+from telegram import Update, message
 from telegram import ParseMode
 from telegram.ext import Updater
 from telegram.ext import MessageHandler
@@ -14,8 +14,8 @@ import mysql.connector
 import threading
 import urllib.request
 
-bot = telebot.TeleBot("1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg")
-TOKEN = '1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg'
+bot = telebot.TeleBot("1435788509:AAGJKj7VaOnbwEbEOEsps1qv9Dq0n5vKV6Y")
+TOKEN = '1435788509:AAGJKj7VaOnbwEbEOEsps1qv9Dq0n5vKV6Y'
 
 eror = '🤷‍♂️*Результатов не найдено. Возможно фильма или сериала с таким названием нет или вы ввели название с ошибкой.*' \
        '\n' \
@@ -91,7 +91,7 @@ def callback_inline(call):
     if call.message:
         if call.data == 'testp':
             chri = "member"
-            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status:
+            if chri == bot.get_chat_member(chat_id="@filmyuserialy", user_id=call.message.chat.id).status or call.from_user.id == 207864941:
                 bot.send_message(call.message.chat.id, privet, parse_mode=ParseMode.MARKDOWN,
                                  disable_web_page_preview=True)
             else:
@@ -207,23 +207,23 @@ tr1 = threading.Thread(target=send_welcome).start()
 tr2 = threading.Thread(target=callback_inline).start()
 tr3 = threading.Thread(target=bad_poisk).start()
 
-# bot.polling(none_stop=True)
+bot.polling(none_stop=True)
 
-server = Flask(__name__)
-
-
-@server.route('/' + TOKEN, methods=['POST'])
-def getMessage():
-    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
-    return "!", 200
-
-
-@server.route("/")
-def webhook():
-    TOKEN = '1435788509:AAES6_wuTrew6vEcxSsL1yQrb2RP0pE3NDg'
-    bot.remove_webhook()
-    bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
-    return "!", 200
+# server = Flask(__name__)
+#
+#
+# @server.route('/' + TOKEN, methods=['POST'])
+# def getMessage():
+#     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+#     return "!", 200
+#
+#
+# @server.route("/")
+# def webhook():
+#     TOKEN = '1435788509:AAGJKj7VaOnbwEbEOEsps1qv9Dq0n5vKV6Y'
+#     bot.remove_webhook()
+#     bot.set_webhook(url='https://searchbottg.herokuapp.com/' + TOKEN)
+#     return "!", 200
 
 
 if __name__ == "__main__":
