@@ -134,7 +134,6 @@ def bad_poisk(message):
                     fname = str(message.from_user.first_name)
                     lname = str(message.from_user.last_name)
 
-
                     z = 'http://playeronline.pro/api/videos.json?title=' + urllib.parse.quote(
                         message.text) + '&token=0b4c43c4ffed666cefe78e9bc99447ed'
                     try:
