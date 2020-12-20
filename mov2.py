@@ -15,7 +15,7 @@ import threading
 import urllib.request
 
 bot = telebot.TeleBot("1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM")
-TOKEN = '1435788509:AAF0j0CIxfWFykNHSpWWH1SqS5UtYNq6lDM'
+TOKEN = '1435788509:AAHKp2sl58PM1-tI0OjKGrI0Lpcxgn447BY'
 
 eror = '🤷‍♂️*Результатов не найдено. Возможно фильма или сериала с таким названием нет или вы ввели название с ошибкой.*' \
        '\n' \
